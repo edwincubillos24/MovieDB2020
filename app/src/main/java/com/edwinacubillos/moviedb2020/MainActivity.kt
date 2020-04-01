@@ -1,24 +1,23 @@
 package com.edwinacubillos.moviedb2020
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.edwinacubillos.moviedb2020.model.Movies
 import com.edwinacubillos.moviedb2020.model.ResultsItem
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainMVP.View {
 
-    private var listMovies = ArrayList<ResultsItem>()
+    private var mainPresenter: MainMVP.Presenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mainPresenter = MainPresenter(this)
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(
@@ -26,26 +25,26 @@ class MainActivity : AppCompatActivity() {
             RecyclerView.VERTICAL,
             false
         )
-        loadList()
     }
 
-    private fun loadList() {
-        val apiKey="ff29f617b45b36aab5aa78a6fa04677f"
+    override fun onResume() {
+        super.onResume()
+        mainPresenter?.loadList()
+    }
 
-        ApiService.create()
-            .getTopRated(apiKey)
-            .enqueue(object : Callback<Movies> {
-                override fun onFailure(call: Call<Movies>, t: Throwable) {
-                    Log.d("Error", t.message)
-                }
+    override fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
 
-                override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                    if (response.isSuccessful) {
-                        listMovies = response.body()?.resultsItems as ArrayList<ResultsItem>
-                        val moviesAdapter = MoviesAdapter(listMovies)
-                        recyclerView.adapter = moviesAdapter
-                    }
-                }
-            })
+    override fun showErrorMsg(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showMovieList(movieList: ArrayList<ResultsItem>) {
+      recyclerView.adapter = MoviesAdapter(movieList)
+    }
+
+    override fun hideProgressBar() {
+        progressBar.visibility = View.GONE
     }
 }
