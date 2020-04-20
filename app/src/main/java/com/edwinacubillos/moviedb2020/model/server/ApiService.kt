@@ -1,4 +1,4 @@
-package com.edwinacubillos.moviedb2020
+package com.edwinacubillos.moviedb2020.model.server
 
 import com.edwinacubillos.moviedb2020.model.Movies
 import okhttp3.OkHttpClient
@@ -17,7 +17,7 @@ interface ApiService {
     companion object{
         val urlAPI = "https://api.themoviedb.org/3/"
 
-        fun create(): ApiService{
+        fun create(): ApiService {
 
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
