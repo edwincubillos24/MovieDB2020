@@ -1,6 +1,7 @@
 package com.edwinacubillos.moviedb2020.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ResultsItem(
     @SerializedName("adult")
@@ -31,4 +32,4 @@ data class ResultsItem(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int
-)
+) : Serializable

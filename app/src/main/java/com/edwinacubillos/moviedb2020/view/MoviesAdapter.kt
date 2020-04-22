@@ -55,6 +55,7 @@ class MoviesAdapter(var mainViewModel: MainViewModel) :
         fun setMovie(mainViewModel: MainViewModel, position: Int) {
             binding?.setVariable(BR.model, mainViewModel)
             binding?.setVariable(BR.position, position)
+
         }
     }
 }
