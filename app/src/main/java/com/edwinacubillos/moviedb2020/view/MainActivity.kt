@@ -30,12 +30,11 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         activityMainBinding.model = mainViewModel
-
+        activityMainBinding.lifecycleOwner = this
         setUpListUpdate()
     }
 
     fun setUpListUpdate() {
-
         mainViewModel?.callMovies()
 
         mainViewModel?.getMovies()?.observe(this, Observer {movie ->
@@ -48,9 +47,9 @@ class MainActivity : AppCompatActivity() {
 
     fun setupListClick(){
         mainViewModel?.getMovieSelected()?.observe(this, Observer{movie->
-       /*     val intent = Intent (this, DetailActivity::class.java)
+           val intent = Intent (this, DetalleActivity::class.java)
             intent.putExtra("movie", movie)
-            startActivity(intent)*/
+            startActivity(intent)
         })
     }
 }

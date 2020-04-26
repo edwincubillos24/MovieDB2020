@@ -7,6 +7,7 @@ class MainObservable : BaseObservable() {
 
     private var mainRepository: IMainRepository = MainRepository()
 
+
     fun callMovies(){
         mainRepository.callMoviesAPI()
     }

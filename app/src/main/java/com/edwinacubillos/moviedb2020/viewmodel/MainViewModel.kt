@@ -1,6 +1,5 @@
 package com.edwinacubillos.moviedb2020.viewmodel
 
-import android.graphics.Movie
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
@@ -35,7 +34,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun getMoviesAt(position: Int): ResultsItem?{
-        var movie: List<ResultsItem>? = mainObservable.getMovies().value
+        val movie: List<ResultsItem>? = mainObservable.getMovies().value
         return movie?.get(position)
     }
 
